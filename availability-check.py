@@ -78,12 +78,8 @@ def ReadAsin(Asin):
 		# in case product available
 		#sendemail(ans, Asin)
 
-def input_check():
-	if not input_list:
-		input_list=input("Enter the Asin List to check\n")
-
-def job(input_list):
-	input_check()
+def job():
+	input_list=["B08CV18TD7"]
 	Asin_list  = input_list.strip().split(",")
 	for p_Asin in Asin_list:
 		print("Tracking....{}".format(p_Asin))
