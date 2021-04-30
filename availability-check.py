@@ -76,7 +76,7 @@ def ReadAsin(Asin):
 	#if ans in arr:
 		# sending email to user if
 		# in case product available
-		#sendemail(ans, Asin)
+		sendemail(ans, Asin)
 
 def job():
 	input_list=["B08CV18TD7"]
