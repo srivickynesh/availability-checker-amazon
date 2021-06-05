@@ -2,5 +2,5 @@ language: python
 sudo: false
 python:
 - 2.7
-- 3.4
+- 3.7
 script: py.test -v
