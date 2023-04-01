@@ -72,7 +72,9 @@ def entry():
         except AttributeError:
             print("product info not found")
 
-        time.sleep(60 * 60 * 3)  # Sleep for 3 hours
+        print("\n Product that you are looking for is", title)
+        print("\n Product current price is ", price)
+        print("\n We'll Notify if product price falls below", Price)
 
 if __name__ == "__main__":
     entry()
