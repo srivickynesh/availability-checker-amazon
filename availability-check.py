@@ -1,37 +1,42 @@
-import os
-import re
 import requests
-from bs4 import BeautifulSoup
-import smtplib
-from fake_useragent import UserAgent
+    from bs4 import BeautifulSoup
+    import smtplib
+    import re
 
-def send_mail(URL, sender_email, password, receivers_email, Price):
+except ImportError:
+    print('Some modules are not installed! ')
+    print("try\t\tpip install requests bs4 smtplib")
+
+global URL
+
+
+# enable "allow less secured apps" on your gmail for recieving emails
+def send_mail(URL, sender_email, password, recievers_email, Price):
     server = smtplib.SMTP('smtp.gmail.com', 587)
+    # The client sends this command to the SMTP server to identify itself and initiate the SMTP conversation.
     server.ehlo()
-    server.starttls()
+    server.starttls()  # encrypts the connnection
 
     server.login(sender_email, password)
     subject = 'Price fell down!'
     body = 'Check the amazon link ' + URL
     msg = f"Subject: {subject}\n\n{body}"
-    server.sendmail(sender_email, receivers_email, msg)
+    server.sendmail(sender_email, recievers_email, msg)
 
     print('email has been sent')
     server.quit()
+
 
 def information(soup, URL, sender_email, password, recievers_email, Price):
 
     title = soup.find(id="productTitle").getText().strip()
     print("\nProduct\t:\n\t", title, "\n")
-
-    try:
-        price = soup.find("span", {"id": "priceblock_ourprice"}).get_text().replace(
-            ',', '').replace('₹', '').replace(' ', '').strip()
-        print("Current price\t:\t", price)
-    except AttributeError:
-        print("Product price not found")
-        return
-
+    # price1 = soup.find(id="priceblock_ourprice").getText()
+    price = soup.find(id="priceblock_ourprice").get_text().replace(
+        ',', '').replace('₹', '').replace(' ', '').strip()
+    print("Current price\t:\t", price)
+    print(price)
+    # using regex to convert into float so we can compare with expected price
     print("Price you expect\t:\t", Price)
     if (float(price) < float(Price)):
         print("YEAH price has fallen!! email will be sent")
@@ -39,24 +44,33 @@ def information(soup, URL, sender_email, password, recievers_email, Price):
     else:
         print("seems like you have to wait -) ")
 
+
 def entry():
+    # URL = "https://www.amazon.in/ASUS-i9-10980HK-Graphics-Windows-G532LWS-HF079T/dp/B08HX42DGG/ref=sr_1_1?crid=MM0GWK65DAA4&dchild=1&keywords=asus+rog+32gb+ram+laptop&qid=1609939236&sprefix=rog+32gb+ram+%2Caps%2C494&sr=8-1"
     URL = os.environ["URL"]
-    Headers = os.environ["HEADERS"]
-    Price1 = os.environ["PRICE1"]
+    Price = os.environ["PRICE1"]
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["SENDER_PASSWORD"]
-    receivers_email = os.environ["RECEIVER_EMAIL"]
+    recievers_email = os.environ["RECEIVER_EMAIL"]
 
+    Headers = input(
+        "\n[+]just type --my user agent -- in your browser and paste the result \nexampe\n'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36\t>>\t"
+    ).strip()
     headers = {"User-Agent": Headers}
     page = requests.get(URL, headers=headers)
+
     soup = BeautifulSoup(page.content, 'html.parser')
     Price = Price1.replace(',', '').replace(' ', '').strip()
 
+    # print(soup.prettify)
     try:
-        print("# enable --allow less secured apps-- on your gmail if you want to receive an email")
-        information(soup, URL, sender_email, password, receivers_email, Price)
+        print(
+            "# enable --allow less secured apps-- on your gmail if you want to recieve a email"
+        )
+        information(soup, URL, sender_email, password, recievers_email, Price)
     except AttributeError:
         print("product info not found")
+
 
 if __name__ == "__main__":
     entry()
