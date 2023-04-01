@@ -51,9 +51,7 @@ def information(soup, URL, sender_email, password, receivers_email, Price):
 
 def entry():
 
-    Headers = os.environ["HEADERS"]
     headers = {"User-Agent": Headers}
-
     page = requests.get(URL, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     Price = Price.replace(',', '').replace(' ', '').strip()
@@ -72,6 +70,7 @@ def entry():
 
 if __name__ == "__main__":
 
+    Headers = os.environ["HEADERS"]
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["SENDER_PASSWORD"]
 
