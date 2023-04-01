@@ -23,7 +23,7 @@ def send_mail(URL, sender_email, password, receivers_email, Price):
     server.starttls()  # encrypts the connection
 
     server.login(sender_email, password)
-    subject = 'Price fell down!'
+    subject = 'Amazon Item Price fell down!'
     body = 'Check the amazon link ' + URL
     msg = f"Subject: {subject}\n\n{body}"
     server.sendmail(sender_email, receivers_email, msg)
@@ -71,9 +71,7 @@ def entry():
     print("\n We'll Notify if product price falls below", Price)
 
 if __name__ == "__main__":
-    
-    URL = os.environ["URL"]
-    Price = os.environ["PRICE1"]
+
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["SENDER_PASSWORD"]
 
