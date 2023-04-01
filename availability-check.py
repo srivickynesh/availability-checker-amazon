@@ -38,8 +38,11 @@ def information(soup, URL, sender_email, password, recievers_email, Price):
         print("\nProduct\t:\n\t", title, "\n")
         price = soup.find(id="priceblock_ourprice").get_text().replace(
             ',', '').replace('₹', '').replace(' ', '').strip()
-        print("Current price\t:\t", price)
-        print("Price you expect\t:\t", Price)
+
+        print("\n Product that you are looking for is", title)
+        print("\n Product current price is ", price)
+        print("\n We'll Notify if product price falls below", Price)
+
         if (float(price) < float(Price)):
             print("YEAH price has fallen!! email will be sent")
             send_mail(URL, sender_email, password, recievers_email, Price)
@@ -47,7 +50,6 @@ def information(soup, URL, sender_email, password, recievers_email, Price):
             print("seems like you have to wait -) ")
     except AttributeError:
         print("product info not found")
-
 
 def entry(URL, Price, sender_email, password, recievers_email, Headers):
 
@@ -63,10 +65,6 @@ def entry(URL, Price, sender_email, password, recievers_email, Headers):
         information(soup, URL, sender_email, password, recievers_email, Price)
     except AttributeError:
         print("product info not found")
-
-    print("\n Product that you are looking for is", title)
-    print("\n Product current price is ", price)
-    print("\n We'll Notify if product price falls below", Price)
 
 if __name__ == "__main__":
 
