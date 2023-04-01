@@ -12,6 +12,9 @@ on:
       expected_price:
         description: 'Expected Price'
         required: true
+      receiver_email:
+        description: 'Receiver Email'
+        required: true
 
 jobs:
   price-tracker:
