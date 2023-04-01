@@ -49,7 +49,7 @@ def information(soup, URL, sender_email, password, receivers_email, Price):
         print("product info not found")
 
 
-def entry():
+def entry(URL, Price, sender_email, password, recievers_email, Headers):
 
     headers = {"User-Agent": Headers}
     page = requests.get(URL, headers=headers)
