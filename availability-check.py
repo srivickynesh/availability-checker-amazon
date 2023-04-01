@@ -20,16 +20,16 @@ def send_mail(URL, sender_email, password, receivers_email, Price):
     server.quit()
 
 def information(soup, URL, sender_email, password, recievers_email, Price):
-    try:
-        title = soup.find(id="productTitle").getText().strip()
-        print("\nProduct1\t:\n\t", title, "\n")
-    except AttributeError:
-        print("Product title not found1")
-        return
 
     try:
         title_h1 = soup.find("h1")
         title = title_h1.find("span").getText().strip()
+        print("\nProduct\t:\n\t", title, "\n")
+    except AttributeError:
+        print("Product title not found")
+
+    try:
+        title = soup.select_one("h1 > span").getText().strip()
         print("\nProduct\t:\n\t", title, "\n")
     except AttributeError:
         print("Product title not found")
