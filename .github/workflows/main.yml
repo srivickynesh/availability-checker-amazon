@@ -4,6 +4,7 @@ on:
   schedule:
     # Run daily at 12 PM and 6 PM IST (6:30 and 12:30 in UTC)
     - cron: '30 6,12 * * *'
+  workflow_dispatch:
 
 jobs:
   price-tracker:
