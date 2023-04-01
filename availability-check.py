@@ -16,7 +16,7 @@ except ImportError:
 
 
 # enable "allow less secured apps" on your gmail for receiving emails
-def send_mail(URL, sender_email, password, receivers_email, Price):
+def send_mail(URL, sender_email, password, recievers_email, Price):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     # The client sends this command to the SMTP server to identify itself and initiate the SMTP conversation.
     server.ehlo()
@@ -26,13 +26,13 @@ def send_mail(URL, sender_email, password, receivers_email, Price):
     subject = 'Amazon Item Price fell down!'
     body = 'Check the amazon link ' + URL
     msg = f"Subject: {subject}\n\n{body}"
-    server.sendmail(sender_email, receivers_email, msg)
+    server.sendmail(sender_email, recievers_email, msg)
 
     print('email has been sent')
     server.quit()
 
 
-def information(soup, URL, sender_email, password, receivers_email, Price):
+def information(soup, URL, sender_email, password, recievers_email, Price):
     try:
         title = soup.find(id="productTitle").getText().strip()
         print("\nProduct\t:\n\t", title, "\n")
@@ -42,7 +42,7 @@ def information(soup, URL, sender_email, password, receivers_email, Price):
         print("Price you expect\t:\t", Price)
         if (float(price) < float(Price)):
             print("YEAH price has fallen!! email will be sent")
-            send_mail(URL, sender_email, password, receivers_email, Price)
+            send_mail(URL, sender_email, password, recievers_email, Price)
         else:
             print("seems like you have to wait -) ")
     except AttributeError:
@@ -60,7 +60,7 @@ def entry(URL, Price, sender_email, password, recievers_email, Headers):
         print(
             "# enable --allow less secured apps-- on your gmail if you want to receive an email"
         )
-        information(soup, URL, sender_email, password, receivers_email, Price)
+        information(soup, URL, sender_email, password, recievers_email, Price)
     except AttributeError:
         print("product info not found")
 
