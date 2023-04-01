@@ -1,8 +1,7 @@
-import os
 import requests
 from bs4 import BeautifulSoup
 import smtplib
-import re
+from fake_useragent import UserAgent
 
 def send_mail(URL, sender_email, password, receivers_email, Price):
     server = smtplib.SMTP('smtp.gmail.com', 587)
