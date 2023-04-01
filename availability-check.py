@@ -20,12 +20,20 @@ def send_mail(URL, sender_email, password, receivers_email, Price):
     server.quit()
 
 def information(soup, URL, sender_email, password, recievers_email, Price):
-    title = soup.find("span", {"id": "productTitle"}).getText().strip()
-    print("\nProduct\t:\n\t", title, "\n")
+    try:
+        title = soup.find("span", {"id": "productTitle"}).getText().strip()
+        print("\nProduct\t:\n\t", title, "\n")
+    except AttributeError:
+        print("Product title not found")
+        return
 
-    price = soup.find("span", {"id": "priceblock_ourprice"}).get_text().replace(
-        ',', '').replace('₹', '').replace(' ', '').strip()
-    print("Current price\t:\t", price)
+    try:
+        price = soup.find("span", {"id": "priceblock_ourprice"}).get_text().replace(
+            ',', '').replace('₹', '').replace(' ', '').strip()
+        print("Current price\t:\t", price)
+    except AttributeError:
+        print("Product price not found")
+        return
 
     print("Price you expect\t:\t", Price)
     if (float(price) < float(Price)):
