@@ -42,4 +42,4 @@ jobs:
           HEADERS: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
           PRICE1: ${{ github.event.inputs.expected_price }}
         run: |
-          python amazon_price_tracker.py
+          python availability-check.py
