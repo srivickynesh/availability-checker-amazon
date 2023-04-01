@@ -1,0 +1,42 @@
+name: Amazon Price Tracker
+
+on:
+  schedule:
+    # Run the script every 3 hours in IST (UTC+5:30)
+    - cron: '30 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      product_url:
+        description: 'Amazon Product URL'
+        required: true
+      expected_price:
+        description: 'Expected Price'
+        required: true
+
+jobs:
+  price-tracker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests bs4
+
+      - name: Run Amazon Price Tracker
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+          URL: ${{ github.event.inputs.product_url }}
+          HEADERS: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
+          PRICE1: ${{ github.event.inputs.expected_price }}
+        run: |
+          python amazon_price_tracker.py
