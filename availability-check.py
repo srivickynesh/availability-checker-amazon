@@ -76,9 +76,8 @@ if __name__ == "__main__":
     Price = os.environ["PRICE1"]
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["SENDER_PASSWORD"]
-    receivers_email = os.environ["RECEIVER_EMAIL"]
 
     with open("urls.txt", "r") as file:
         for line in file:
-            URL, Price = line.strip().split(",")
+            URL, Price, recievers_email = line.strip().split(",")
             entry(URL, Price, sender_email, password, recievers_email, Headers)
