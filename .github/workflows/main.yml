@@ -34,7 +34,7 @@ jobs:
         env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
-          RECEIVER_EMAIL: ${{ github.event.inputs.receiver_email}}
+          RECEIVER_EMAIL: ${{ github.event.inputs.receiver_email }}
           URL: ${{ github.event.inputs.product_url }}
           HEADERS: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
           PRICE1: ${{ github.event.inputs.expected_price }}
