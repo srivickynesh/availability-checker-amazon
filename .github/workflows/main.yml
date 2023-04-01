@@ -1,9 +1,6 @@
 name: Amazon Price Tracker
 
 on:
-  schedule:
-    # Run the script every 3 hours in IST (UTC+5:30)
-    - cron: '30 */3 * * *'
   workflow_dispatch:
     inputs:
       product_url:
@@ -31,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests bs4
+          pip install requests bs4 fake_useragent
 
       - name: Run Amazon Price Tracker
         env:
@@ -42,4 +39,4 @@ jobs:
           HEADERS: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36'
           PRICE1: ${{ github.event.inputs.expected_price }}
         run: |
-          python availability-check.py
+          python amazon_price_tracker.py
