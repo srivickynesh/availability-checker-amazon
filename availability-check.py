@@ -1,7 +1,7 @@
 import requests
-    from bs4 import BeautifulSoup
-    import smtplib
-    import re
+from bs4 import BeautifulSoup
+import smtplib
+import re
 
 except ImportError:
     print('Some modules are not installed! ')
