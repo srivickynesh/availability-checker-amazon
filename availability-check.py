@@ -18,16 +18,18 @@ def send_mail(URL, sender_email, password, receivers_email, Price):
     print('email has been sent')
     server.quit()
 
-def information(soup, URL, sender_email, password, receivers_email, Price):
-    title = soup.find(id="productTitle").getText().strip()
+def information(soup, URL, sender_email, password, recievers_email, Price):
+    title = soup.find("span", {"id": "productTitle"}).getText().strip()
     print("\nProduct\t:\n\t", title, "\n")
-    price = soup.find(id="priceblock_ourprice").get_text().replace(
+
+    price = soup.find("span", {"id": "priceblock_ourprice"}).get_text().replace(
         ',', '').replace('₹', '').replace(' ', '').strip()
     print("Current price\t:\t", price)
+
     print("Price you expect\t:\t", Price)
     if (float(price) < float(Price)):
         print("YEAH price has fallen!! email will be sent")
-        send_mail(URL, sender_email, password, receivers_email, Price)
+        send_mail(URL, sender_email, password, recievers_email, Price)
     else:
         print("seems like you have to wait -) ")
 
