@@ -56,9 +56,7 @@ def entry():
     password = os.environ["SENDER_PASSWORD"]
     receivers_email = os.environ["RECEIVER_EMAIL"]
 
-    Headers = input(
-        "\n[+]just type --my user agent -- in your browser and paste the result \nexampe\n'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36\t>>\t"
-    ).strip()
+    Headers = os.environ["HEADERS"]
     headers = {"User-Agent": Headers}
 
     while True:
