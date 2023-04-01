@@ -50,31 +50,35 @@ def information(soup, URL, sender_email, password, receivers_email, Price):
 
 
 def entry():
+
+    Headers = os.environ["HEADERS"]
+    headers = {"User-Agent": Headers}
+
+    page = requests.get(URL, headers=headers)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    Price = Price.replace(',', '').replace(' ', '').strip()
+
+    try:
+        print(
+            "# enable --allow less secured apps-- on your gmail if you want to receive an email"
+        )
+        information(soup, URL, sender_email, password, receivers_email, Price)
+    except AttributeError:
+        print("product info not found")
+
+    print("\n Product that you are looking for is", title)
+    print("\n Product current price is ", price)
+    print("\n We'll Notify if product price falls below", Price)
+
+if __name__ == "__main__":
+    
     URL = os.environ["URL"]
     Price = os.environ["PRICE1"]
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["SENDER_PASSWORD"]
     receivers_email = os.environ["RECEIVER_EMAIL"]
 
-    Headers = os.environ["HEADERS"]
-    headers = {"User-Agent": Headers}
-
-    while True:
-        page = requests.get(URL, headers=headers)
-        soup = BeautifulSoup(page.content, 'html.parser')
-        Price = Price.replace(',', '').replace(' ', '').strip()
-
-        try:
-            print(
-                "# enable --allow less secured apps-- on your gmail if you want to receive an email"
-            )
-            information(soup, URL, sender_email, password, receivers_email, Price)
-        except AttributeError:
-            print("product info not found")
-
-        print("\n Product that you are looking for is", title)
-        print("\n Product current price is ", price)
-        print("\n We'll Notify if product price falls below", Price)
-
-if __name__ == "__main__":
-    entry()
+    with open("urls.txt", "r") as file:
+        for line in file:
+            URL, Price = line.strip().split(",")
+            entry(URL, Price, sender_email, password, recievers_email, Headers)
